@@ -1,4 +1,5 @@
 //you need to do ssc install insheetjosn to be able to load JSON files to STATA
+//also do ssc install libjson
 gen str50 employee_name=""
 gen str50 employee_salary=""
 gen str50 employee_age=""
