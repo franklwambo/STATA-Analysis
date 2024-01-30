@@ -1,0 +1,29 @@
+//output to multiple sheets of a single Excel file, and append the current date to the Excel workbook name
+
+local reportdate : di %tdCYND daily("$S_DATE", "DMY")
+local output_filename= "Pneumococcal_Carriage_`reportdate'"+".xlsx"
+
+cd "D:\safehandles\carriage_samples"
+clear
+use gilgel_ref
+merge m:m gilgel using gilgel_redcap
+drop _merge
+export excel using "`output_filename'", sheet("gilgel") firstrow(variables) replace
+//Only use replace on the first export; subsequent exports involve creation of new sheets onto an exisiting workbook
+clear
+use harar_ref
+merge m:m harar using harar_redcap
+drop _merge
+export excel using "`output_filename'", sheet("harar") firstrow(variables)
+clear
+use kersa_ref
+merge m:m kersa using kersa_redcap
+drop _merge
+export excel using "`output_filename'", sheet("kersa") firstrow(variables)
+clear
+use jimma_ref
+br
+merge m:m jimma using jimma_redcap
+drop _merge
+export excel using "`output_filename'", sheet("jimma") firstrow(variables)
+clear
